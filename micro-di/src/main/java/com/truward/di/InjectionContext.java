@@ -25,6 +25,8 @@ package com.truward.di;
  * The methods annotated with the PostConstruct will be invoked when all these fields
  * will be initialized.
  *
+ * The implementations of this class are not thread safe unless otherwise specified.
+ *
  * @see javax.annotation.Resource
  * @see javax.annotation.PostConstruct
  */
