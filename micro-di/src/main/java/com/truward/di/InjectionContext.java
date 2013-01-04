@@ -29,6 +29,8 @@ package com.truward.di;
  *
  * @see javax.annotation.Resource
  * @see javax.annotation.PostConstruct
+ *
+ * @author Alexander Shabanov
  */
 public interface InjectionContext {
 

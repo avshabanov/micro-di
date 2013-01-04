@@ -31,6 +31,8 @@ import java.util.Set;
 
 /**
  * Default implementation of {@link InjectionContext}.
+ *
+ * @author Alexander Shabanov
  */
 public class DefaultInjectionContext implements InjectionContext {
     private static final class BeanHolder<T> {
@@ -96,7 +98,7 @@ public class DefaultInjectionContext implements InjectionContext {
         for (final BeanHolder<?> holder : beanHolders) {
             if (beanClass.isAssignableFrom(holder.bean.getClass())) {
                 if (beanHolder != null) {
-                    throw new AssertionError("Ambigous definition for class " + beanClass +
+                    throw new IllegalStateException("Ambigous definition for class " + beanClass +
                             " conflicting definitions are: " + holder.bean + " and " + beanHolder.bean);
                 }
 
@@ -105,7 +107,7 @@ public class DefaultInjectionContext implements InjectionContext {
         }
 
         if (beanHolder == null) {
-            throw new AssertionError("The requested bean of class " + beanClass + " has not been found");
+            throw new IllegalStateException("The requested bean of class " + beanClass + " has not been found");
         }
 
         return beanHolder;
@@ -121,11 +123,11 @@ public class DefaultInjectionContext implements InjectionContext {
         // as in this case clashes is inevitable.
         for (final BeanHolder<?> beanHolder : beanHolders) {
             if (beanHolder.bean == bean) {
-                throw new AssertionError("Duplicate declaration of bean " + bean);
+                throw new IllegalStateException("Duplicate declaration of bean " + bean);
             }
 
             if (beanHolder.bean.getClass().equals(bean.getClass())) {
-                throw new AssertionError("The context already have definition of bean with class " + bean.getClass());
+                throw new IllegalStateException("The context already have definition of bean with class " + bean.getClass());
             }
         }
 
@@ -137,7 +139,7 @@ public class DefaultInjectionContext implements InjectionContext {
     // creates bean for class-only putBean method
     private <T> T constructBean(Class<T> beanClass) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         if (beanClass.isInterface()) {
-            throw new AssertionError("The given class is interface: " + beanClass);
+            throw new IllegalStateException("The given class is interface: " + beanClass);
         }
 
         T beanInstance = null;
@@ -145,7 +147,7 @@ public class DefaultInjectionContext implements InjectionContext {
         // try to instantiate bean using constructor
         for (final Constructor<?> ctor : beanClass.getConstructors()) {
             if (beanInstance != null) {
-                throw new AssertionError("Bean " + beanClass + " defines multiple constructors");
+                throw new IllegalStateException("Bean " + beanClass + " defines multiple constructors");
             }
 
             final Class<?>[] parameterTypes = ctor.getParameterTypes();
@@ -176,11 +178,11 @@ public class DefaultInjectionContext implements InjectionContext {
         try {
             addUninitializedBean(constructBean(beanClass));
         } catch (InstantiationException e) {
-            throw new AssertionError(e);
+            throw new IllegalStateException(e);
         } catch (IllegalAccessException e) {
-            throw new AssertionError(e);
+            throw new IllegalStateException(e);
         } catch (InvocationTargetException e) {
-            throw new AssertionError(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -202,7 +204,7 @@ public class DefaultInjectionContext implements InjectionContext {
                     continue;
                 }
 
-                if (!resourceAnnotation.mappedName().equals("")) {
+                if (!resourceAnnotation.mappedName().isEmpty()) {
                     throw new UnsupportedOperationException("Beans with mappedName are not supported, " +
                             "class: " + beanImplClass + ", field: " + field.getName() + ", " +
                             "mappedName: " + resourceAnnotation.mappedName());
@@ -233,7 +235,8 @@ public class DefaultInjectionContext implements InjectionContext {
 
             // validate and invoke post-construct method
             if (method.getParameterTypes().length > 0) {
-                throw new AssertionError("Post construct method shall not accept any parameters, method: " + method);
+                throw new UnsupportedOperationException("Method " + method + " is declared as post construct, but " +
+                        "it takes parameters which is not supported");
             }
 
             method.invoke(beanHolder.bean);
@@ -258,9 +261,9 @@ public class DefaultInjectionContext implements InjectionContext {
             try {
                 initializeBeanHolder(beanHolder);
             } catch (IllegalAccessException e) {
-                throw new AssertionError("Illegal access error " + e + " when initializing class " + beanClass);
+                throw new IllegalStateException("Illegal access error when initializing class " + beanClass, e);
             } catch (InvocationTargetException e) {
-                throw new AssertionError("Invocation error " + e + " when initializing class " + beanClass);
+                throw new IllegalStateException("Invocation error when initializing class " + beanClass, e);
             }
 
         }

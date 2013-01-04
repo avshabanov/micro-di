@@ -96,9 +96,6 @@ public class DefaultInjectionContextTest {
         }
     }
 
-    /**
-     * Tests base context usage scenario.
-     */
     @Test
     public void shouldInjectOneBeanWithinAnother() {
         context.registerBean(new SuperiorImpl());

@@ -1,11 +1,10 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.truward.di</groupId>
     <artifactId>micro-di-root</artifactId>
-    <version>1.0-ROOT-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>App Project Root</name>
     <description>Root of the My Application project.</description>
@@ -15,8 +14,6 @@
     </modules>
 
     <properties>
-       <micro-di.version>1.0.0-SNAPSHOT</micro-di.version>
-
        <!--  compiler settings -->
        <maven.compiler.source>1.6</maven.compiler.source>
        <maven.compiler.target>1.6</maven.compiler.target>
