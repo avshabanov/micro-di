@@ -32,3 +32,28 @@ Micro Dependency Injection Framework for Java (~10Kb)
         assertEquals(11, superior.bar());
     }
 
+# Adding to maven project
+
+In your pom.xml or in your settings.xml add the following repository:
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>libs-release</name>
+            <url>https://github.com/avshabanov/maven-repo/raw/master/libs-release</url>
+        </repository>
+    </repositories>
+
+and then add jar dependency in your pom.xml:
+
+    <dependency>
+        <groupId>com.truward.di</groupId>
+        <artifactId>micro-di</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
+Have fun!
+
