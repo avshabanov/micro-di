@@ -41,7 +41,7 @@ In your pom.xml or in your settings.xml add the following repository:
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>central</id>
+            <id>custom-central</id>
             <name>libs-release</name>
             <url>https://github.com/avshabanov/maven-repo/raw/master/libs-release</url>
         </repository>
