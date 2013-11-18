@@ -144,6 +144,54 @@ public class DefaultInjectionContextTest {
         assertEquals(11011, superior.bar());
     }
 
+    public interface Bar {
+        int getBarCode();
+    }
+
+    public interface Baz {
+        int getBazCode();
+    }
+
+    public interface BarBaz extends Bar, Baz {}
+
+    public static class BarImpl implements Bar {
+        @Override
+        public int getBarCode() {
+            return 1;
+        }
+    }
+
+    public static class BazImpl implements Baz {
+        @Override
+        public int getBazCode() {
+            return 2;
+        }
+    }
+
+    public static class BarBazImpl implements BarBaz {
+        @Override
+        public int getBarCode() {
+            return 3;
+        }
+
+        @Override
+        public int getBazCode() {
+            return 4;
+        }
+    }
+
+    @Test
+    public void shouldBeAbleToFetchBeanList() {
+        context.registerBean(new BarImpl());
+        context.registerBean(new BazImpl());
+        context.registerBean(new BarBazImpl());
+
+        assertEquals(2, context.getBeans(Bar.class).size());
+        assertEquals(2, context.getBeans(Baz.class).size());
+        assertEquals(1, context.getBeans(BarBaz.class).size());
+        assertTrue(context.getBeans(Inferior.class).isEmpty());
+    }
+
     public static final class ContextAware {
         @Resource
         InjectionContext context;

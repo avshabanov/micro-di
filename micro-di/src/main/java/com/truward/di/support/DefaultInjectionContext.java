@@ -22,12 +22,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Default implementation of {@link InjectionContext}.
@@ -246,14 +241,7 @@ public class DefaultInjectionContext implements InjectionContext {
         beanHolder.initialized = true;
     }
 
-    @Override
-    public <T> T getBean(Class<T> beanClass) {
-        // special case: Context requested
-        if (beanClass.equals(InjectionContext.class)) {
-            return beanClass.cast(this);
-        }
-
-        final BeanHolder<?> beanHolder = findBeanHolder(beanClass);
+    private <T> T getInitializedBean(BeanHolder<?> beanHolder, Class<T> beanClass) {
         assert beanHolder != null;
 
         // initialize all the fields
@@ -265,9 +253,41 @@ public class DefaultInjectionContext implements InjectionContext {
             } catch (InvocationTargetException e) {
                 throw new IllegalStateException("Invocation error when initializing class " + beanClass, e);
             }
-
         }
 
         return beanClass.cast(beanHolder.bean);
+    }
+
+    @Override
+    public <T> T getBean(Class<T> beanClass) {
+        // special case: Context requested
+        if (beanClass.equals(InjectionContext.class)) {
+            return beanClass.cast(this);
+        }
+
+        return getInitializedBean(findBeanHolder(beanClass), beanClass);
+    }
+
+    @Override
+    public <T> List<T> getBeans(Class<T> beanClass) {
+        final BeanHolder<?> beanHolder = cachedInterfaceMap.get(beanClass);
+
+        if (beanHolder == null) {
+            return Collections.emptyList();
+        }
+
+        if (beanHolder != NIL_BEAN_HOLDER) {
+            return Collections.singletonList(getInitializedBean(beanHolder, beanClass));
+        }
+
+        // get bean holder by direct access (uncached)
+        final List<T> beans = new ArrayList<T>();
+        for (final BeanHolder<?> holder : beanHolders) {
+            if (beanClass.isAssignableFrom(holder.bean.getClass())) {
+                beans.add(getInitializedBean(holder, beanClass));
+            }
+        }
+
+        return Collections.unmodifiableList(beans);
     }
 }

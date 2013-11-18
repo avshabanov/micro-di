@@ -14,6 +14,8 @@
 
 package com.truward.di;
 
+import java.util.List;
+
 /**
  * Provides very simple dependency injection support by
  * relying on the Resource annotation.
@@ -63,4 +65,13 @@ public interface InjectionContext {
      * @return Non-null bean instance.
      */
     <T> T getBean(Class<T> beanClass);
+
+    /**
+     * Returns all the beans that implement the given class.
+     *
+     * @param beanClass Interface class, that is expected to be associated with the bean.
+     * @param <T> Interface type.
+     * @return Non-null list
+     */
+    <T> List<T> getBeans(Class<T> beanClass);
 }
