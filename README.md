@@ -5,55 +5,61 @@ Micro Dependency Injection Framework for Java (~10Kb)
 
 ## Sample Usage
 
-    public interface Inferior {
-        int foo();
-    }
+```java
+public interface Foo {
+  int foo();
+}
 
-    public interface Superior {
-        int bar();
-    }
+public interface Bar {
+  int bar();
+}
 
-    public class InferiorImpl implements Inferior {
-        @Override public int foo() { return 1; }
-    }
+public class FooImpl implements Foo {
+  @Override public int foo() { return 1; }
+}
 
-    public class SuperiorImpl implements Superior {
-        @Resource protected Inferior inferior;
+public class BarImpl implements Bar {
+  @Resource private Foo foo;
 
-        @Override public int bar() { return 10 + inferior.foo(); }
-    }
+  @Override public int bar() { return 10 + foo.foo(); }
+}
 
-    @Test
-    public void shouldInjectOneBeanWithinAnother() {
-        context.registerBean(new SuperiorImpl());
-        context.registerBean(new InferiorImpl());
+// usage:
+InjectionContext context = new DefaultInjectionContext();
+context.registerBean(new FooImpl());
+context.registerBean(new BarImpl());
+context.freeze(); // "locks" context, so that it becames read-only
 
-        final Superior superior = context.getBean(Superior.class);
-        assertEquals(11, superior.bar());
-    }
+final Foo foo = context.getBean(Foo.class);
+// actions on foo
+```
 
 # Adding to maven project
 
 In your pom.xml or in your settings.xml add the following repository:
 
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>custom-central</id>
-            <name>libs-release</name>
-            <url>https://github.com/avshabanov/maven-repo/raw/master/libs-release</url>
-        </repository>
-    </repositories>
+```xml
+<repositories>
+  <repository>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
+    <id>custom-central</id>
+    <name>libs-release</name>
+    <url>https://raw.github.com/avshabanov/maven-repo/master/libs-release</url>
+  </repository>
+</repositories>
+```
 
 and then add jar dependency in your pom.xml:
 
-    <dependency>
-        <groupId>com.truward.di</groupId>
-        <artifactId>micro-di</artifactId>
-        <version>1.0.0</version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>com.truward.di</groupId>
+  <artifactId>micro-di</artifactId>
+  <version>1.0.3</version>
+</dependency>
+```
 
 Have fun!
 
