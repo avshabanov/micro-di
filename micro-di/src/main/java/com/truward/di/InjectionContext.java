@@ -36,42 +36,54 @@ import java.util.List;
  */
 public interface InjectionContext {
 
-    /**
-     * Puts bean instance to the context.
-     * The bean should be only one.
-     *
-     * @param bean Bean instance.
-     * @param <T> Bean's class.
-     */
-    <T> void registerBean(T bean);
+  /**
+   * Puts bean instance to the context.
+   * The bean should be only one.
+   *
+   * @param bean Bean instance.
+   * @param <T> Bean's class.
+   */
+  <T> void registerBean(T bean);
 
-    /**
-     * Puts bean instance associated with the given class.
-     * Throws assertion error if the given bean class clashes with certain existing definition.
-     *
-     * @param beanClass Non-interface bean class.
-     * @param <T> Bean class type.
-     */
-    <T> void registerBean(Class<T> beanClass);
+  /**
+   * Puts bean instance associated with the given class.
+   * Throws {@link InjectionException} if the given bean class clashes with certain existing definition.
+   *
+   * @param beanClass Non-interface bean class.
+   * @param <T> Bean class type.
+   */
+  <T> void registerBean(Class<T> beanClass);
 
-    /**
-     * Gets bean associated with the class given.
-     * Returns current Context instance when beanClass equals to Context class itself.
-     * Throws assertion error in case of no bean associated with the given class.
-     * Throws assertion error if multiple beans can be returned by this method.
-     *
-     * @param beanClass Interface class, that is expected to be associated with the bean.
-     * @param <T> Interface type.
-     * @return Non-null bean instance.
-     */
-    <T> T getBean(Class<T> beanClass);
+  /**
+   * Gets bean associated with the class given.
+   * Returns current Context instance when beanClass equals to Context class itself.
+   * Throws {@link InjectionException} in case of no bean associated with the given class.
+   * Throws {@link InjectionException} if multiple beans can be returned by this method.
+   *
+   * @param beanClass Interface class, that is expected to be associated with the bean.
+   * @param <T> Interface type.
+   * @return Non-null bean instance.
+   */
+  <T> T getBean(Class<T> beanClass);
 
-    /**
-     * Returns all the beans that implement the given class.
-     *
-     * @param beanClass Interface class, that is expected to be associated with the bean.
-     * @param <T> Interface type.
-     * @return Non-null list
-     */
-    <T> List<T> getBeans(Class<T> beanClass);
+  /**
+   * Returns all the beans that implement the given class.
+   *
+   * @param beanClass Interface class, that is expected to be associated with the bean.
+   * @param <T> Interface type.
+   * @return Non-null list
+   */
+  <T> List<T> getBeans(Class<T> beanClass);
+
+  /**
+   * Freezes current context, so there will be no possibility to modify this context.
+   * @see #isFrozen()
+   */
+  void freeze();
+
+  /**
+   * @return Boolean flag, that indicates, whether the context is frozen or not.
+   * @see #freeze()
+   */
+  boolean isFrozen();
 }

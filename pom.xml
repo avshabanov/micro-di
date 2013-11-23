@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.truward.di</groupId>
-    <artifactId>micro-di-root</artifactId>
-    <version>1.0.2</version>
-    <packaging>pom</packaging>
-    <name>App Project Root</name>
-    <description>Root of the My Application project.</description>
+  <groupId>com.truward.di</groupId>
+  <artifactId>micro-di-root</artifactId>
+  <version>1.0.3</version>
+  <packaging>pom</packaging>
+  <name>App Project Root</name>
+  <description>Root of the My Application project.</description>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <scm>
-        <url>https://github.com/avshabanov/micro-di</url>
-        <connection>git@github.com:avshabanov/micro-di.git</connection>
-    </scm>
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/avshabanov/micro-di/issues</url>
-    </issueManagement>
-    <inceptionYear>2011</inceptionYear>
-    <developers>
-        <developer>
-            <id>avshabanov</id>
-            <name>Alexander Shabanov</name>
-            <email>avshabanov@gmail.com</email>
-        </developer>
-    </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/avshabanov/micro-di</url>
+    <connection>git@github.com:avshabanov/micro-di.git</connection>
+  </scm>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/avshabanov/micro-di/issues</url>
+  </issueManagement>
+  <inceptionYear>2011</inceptionYear>
+  <developers>
+    <developer>
+      <id>avshabanov</id>
+      <name>Alexander Shabanov</name>
+      <email>avshabanov@gmail.com</email>
+    </developer>
+  </developers>
 
-    <modules>
-       <module>micro-di</module>
-    </modules>
+  <modules>
+    <module>micro-di</module>
+  </modules>
 
-    <properties>
-       <!--  compiler settings -->
-       <maven.compiler.source>1.6</maven.compiler.source>
-       <maven.compiler.target>1.6</maven.compiler.target>
+  <properties>
+    <!--  compiler settings -->
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
 
-       <!-- encoding -->
-       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+    <!-- encoding -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
 
-    <dependencyManagement>
+  <dependencyManagement>
 
-       <dependencies>
+    <dependencies>
 
-           <!-- Test scope -->
-           <dependency>
-               <groupId>junit</groupId>
-               <artifactId>junit</artifactId>
-               <version>4.8.2</version>
-               <scope>test</scope>
-           </dependency>
-           <dependency>
-               <groupId>org.easymock</groupId>
-               <artifactId>easymock</artifactId>
-               <version>3.0</version>
-               <scope>test</scope>
-           </dependency>
-       </dependencies>
-    </dependencyManagement>
+      <!-- Test scope -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.8.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymock</artifactId>
+        <version>3.0</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <build>
-       <pluginManagement>
-           <plugins>
-               <!-- Clean plugin -->
-               <plugin>
-                   <artifactId>maven-clean-plugin</artifactId>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <version>2.2</version>
-               </plugin>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Clean plugin -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <groupId>org.apache.maven.plugins</groupId>
+          <version>2.2</version>
+        </plugin>
 
-               <!-- Dependencies plugin -->
-               <plugin>
-                   <artifactId>maven-dependency-plugin</artifactId>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <version>2.2</version>
-               </plugin>
-           </plugins>
-       </pluginManagement>
-    </build>
+        <!-- Dependencies plugin -->
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <groupId>org.apache.maven.plugins</groupId>
+          <version>2.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
 
