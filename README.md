@@ -34,7 +34,11 @@ final Foo foo = context.getBean(Foo.class);
 // actions on foo
 ```
 
-# Adding to maven project
+# Compiling from sources and installing to the local maven repository
+
+Just do ``mvn clean install`` in source folder
+
+# Adding to maven project with minimal fuss
 
 In your pom.xml or in your settings.xml add the following repository:
 
