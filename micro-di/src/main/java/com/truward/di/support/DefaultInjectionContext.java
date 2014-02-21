@@ -165,6 +165,8 @@ public class DefaultInjectionContext implements InjectionContext {
       return beanHolder;
     }
 
+    beanHolder = null; // reset sentinel so that we'll get a correct message about duplicate bean definitions
+
     // get bean holder by direct access (uncached)
     for (final BeanHolder<?> holder : beanHolders) {
       if (beanClass.isAssignableFrom(holder.bean.getClass())) {

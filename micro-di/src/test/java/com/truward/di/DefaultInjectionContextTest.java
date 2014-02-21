@@ -216,4 +216,24 @@ public class DefaultInjectionContextTest {
     context.freeze();
     context.registerBean(BarImpl.class);
   }
+
+  public static final class Bean1 implements Cloneable {}
+  public static final class Bean2 implements Cloneable {}
+
+  @Test
+  public void shouldGetCorrectExceptionMessageAboutDuplicateBeanDefinitions() {
+    context.registerBean(Bean1.class);
+    context.registerBean(Bean2.class);
+    context.freeze();
+
+    try {
+      context.getBean(Cloneable.class);
+      fail("Should get exception on attempt to get two bean definitions");
+    } catch (InjectionException e) {
+      // exception message should contain conflicting bean names:
+      final String message = e.getMessage();
+      assertTrue("Missing name of the first bean", message.contains(Bean1.class.getSimpleName()));
+      assertTrue("Missing name of the second bean", message.contains(Bean2.class.getSimpleName()));
+    }
+  }
 }

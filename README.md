@@ -61,7 +61,7 @@ and then add jar dependency in your pom.xml:
 <dependency>
   <groupId>com.truward.di</groupId>
   <artifactId>micro-di</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
