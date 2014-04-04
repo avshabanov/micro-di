@@ -7,6 +7,8 @@ import org.junit.Test;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import java.io.Serializable;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -235,5 +237,18 @@ public class DefaultInjectionContextTest {
       assertTrue("Missing name of the first bean", message.contains(Bean1.class.getSimpleName()));
       assertTrue("Missing name of the second bean", message.contains(Bean2.class.getSimpleName()));
     }
+  }
+
+  public static class BaseBean implements Cloneable {}
+  public static final class NestedBean extends BaseBean implements Serializable {}
+
+  @Test
+  public void shouldCountBaseClassInterfaces() {
+    context.registerBean(BaseBean.class);
+    context.registerBean(NestedBean.class);
+    context.freeze();
+
+    assertEquals(2, context.getBeans(Cloneable.class).size());
+    assertEquals(1, context.getBeans(Serializable.class).size());
   }
 }

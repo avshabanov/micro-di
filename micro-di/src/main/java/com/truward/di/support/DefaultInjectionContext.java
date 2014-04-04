@@ -131,16 +131,23 @@ public class DefaultInjectionContext implements InjectionContext {
   }
 
 
-  private static void addInterfacesToSink(Set<Class<?>> interfaceSink, Class<?>[] interfaceClasses) {
-    for (final Class<?> interfaceClass : interfaceClasses) {
+  private static void addInterfacesToSink(Set<Class<?>> interfaceSink, Class<?> targetClass) {
+    if (!targetClass.isInterface()) {
+      final Class<?> superclass = targetClass.getSuperclass();
+      if (superclass != null) {
+        addInterfacesToSink(interfaceSink, superclass);
+      }
+    }
+
+    for (final Class<?> interfaceClass : targetClass.getInterfaces()) {
       interfaceSink.add(interfaceClass);
-      addInterfacesToSink(interfaceSink, interfaceClass.getInterfaces());
+      addInterfacesToSink(interfaceSink, interfaceClass);
     }
   }
 
   private void cacheInterfaces(BeanHolder<?> beanHolder) {
     final Set<Class<?>> interfaceSink = new HashSet<Class<?>>();
-    addInterfacesToSink(interfaceSink, beanHolder.bean.getClass().getInterfaces());
+    addInterfacesToSink(interfaceSink, beanHolder.bean.getClass());
 
     // cache all the definitions
     for (final Class<?> interfaceClass : interfaceSink) {
