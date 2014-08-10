@@ -4,7 +4,7 @@
 
   <groupId>com.truward.di</groupId>
   <artifactId>micro-di-root</artifactId>
-  <version>1.0.5-SNAPSHOT</version>
+  <version>1.0.5</version>
   <packaging>pom</packaging>
   <name>Micro DI Project Root</name>
 
@@ -20,6 +20,7 @@
     <url>https://github.com/avshabanov/micro-di</url>
     <developerConnection>scm:git:git@github.com:avshabanov/micro-di.git</developerConnection>
     <connection>scm:git:git@github.com:avshabanov/micro-di.git</connection>
+    <tag>micro-di-root-1.0.5</tag>
   </scm>
 
   <issueManagement>
