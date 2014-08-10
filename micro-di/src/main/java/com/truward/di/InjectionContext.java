@@ -14,6 +14,7 @@
 
 package com.truward.di;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public interface InjectionContext {
    * @param bean Bean instance.
    * @param <T> Bean's class.
    */
-  <T> void registerBean(T bean);
+  <T> void registerBean(@Nonnull T bean);
 
   /**
    * Puts bean instance associated with the given class.
@@ -52,7 +53,7 @@ public interface InjectionContext {
    * @param beanClass Non-interface bean class.
    * @param <T> Bean class type.
    */
-  <T> void registerBean(Class<T> beanClass);
+  <T> void registerBean(@Nonnull Class<T> beanClass);
 
   /**
    * Gets bean associated with the class given.
@@ -64,7 +65,8 @@ public interface InjectionContext {
    * @param <T> Interface type.
    * @return Non-null bean instance.
    */
-  <T> T getBean(Class<T> beanClass);
+  @Nonnull
+  <T> T getBean(@Nonnull Class<T> beanClass);
 
   /**
    * Returns all the beans that implement the given class.
@@ -73,7 +75,8 @@ public interface InjectionContext {
    * @param <T> Interface type.
    * @return Non-null list
    */
-  <T> List<T> getBeans(Class<T> beanClass);
+  @Nonnull
+  <T> List<T> getBeans(@Nonnull Class<T> beanClass);
 
   /**
    * Freezes current context, so there will be no possibility to modify this context.

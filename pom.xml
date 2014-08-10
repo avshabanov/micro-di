@@ -66,6 +66,12 @@
   <dependencyManagement>
 
     <dependencies>
+      <!-- FindBugs - JSR-305 for @Nonnull etc. -->
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>1.3.9</version>
+      </dependency>
 
       <!-- Test scope -->
       <dependency>

@@ -12,6 +12,12 @@
   <name>Micro DI library</name>
 
   <dependencies>
+    <!-- FindBugs - JSR-305 for @Nonnull etc. -->
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+    </dependency>
+
     <!-- test scope -->
     <dependency>
       <groupId>junit</groupId>
@@ -22,32 +28,4 @@
       <artifactId>easymock</artifactId>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <!-- Generate java sources -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals><goal>jar</goal></goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- Generate javadoc sources -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals><goal>jar</goal></goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

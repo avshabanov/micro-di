@@ -147,39 +147,20 @@ public class DefaultInjectionContextTest {
   }
 
   public interface Bar {
-    int getBarCode();
   }
 
   public interface Baz {
-    int getBazCode();
   }
 
   public interface BarBaz extends Bar, Baz {}
 
   public static class BarImpl implements Bar {
-    @Override
-    public int getBarCode() {
-      return 1;
-    }
   }
 
   public static class BazImpl implements Baz {
-    @Override
-    public int getBazCode() {
-      return 2;
-    }
   }
 
   public static class BarBazImpl implements BarBaz {
-    @Override
-    public int getBarCode() {
-      return 3;
-    }
-
-    @Override
-    public int getBazCode() {
-      return 4;
-    }
   }
 
   @Test

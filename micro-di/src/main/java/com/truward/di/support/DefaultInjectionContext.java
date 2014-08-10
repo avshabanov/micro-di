@@ -17,6 +17,7 @@ package com.truward.di.support;
 import com.truward.di.InjectionContext;
 import com.truward.di.InjectionException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.lang.reflect.Constructor;
@@ -33,9 +34,10 @@ import java.util.*;
 public class DefaultInjectionContext implements InjectionContext {
   private static final class BeanHolder<T> {
     boolean initialized = false;
+    @Nonnull
     final T bean;
 
-    BeanHolder(T bean) {
+    BeanHolder(@Nonnull T bean) {
       this.bean = bean;
     }
   }
@@ -58,13 +60,13 @@ public class DefaultInjectionContext implements InjectionContext {
   private boolean frozen;
 
   @Override
-  public <T> void registerBean(T bean) {
+  public <T> void registerBean(@Nonnull T bean) {
     shouldNotBeFrozen();
     addUninitializedBean(bean);
   }
 
   @Override
-  public <T> void registerBean(Class<T> beanClass) {
+  public <T> void registerBean(@Nonnull Class<T> beanClass) {
     shouldNotBeFrozen();
     try {
       addUninitializedBean(constructBean(beanClass));
@@ -77,8 +79,9 @@ public class DefaultInjectionContext implements InjectionContext {
     }
   }
 
+  @Nonnull
   @Override
-  public <T> T getBean(Class<T> beanClass) {
+  public <T> T getBean(@Nonnull Class<T> beanClass) {
     // special case: Context requested
     if (beanClass.equals(InjectionContext.class)) {
       return beanClass.cast(this);
@@ -87,8 +90,9 @@ public class DefaultInjectionContext implements InjectionContext {
     return getInitializedBean(findBeanHolder(beanClass), beanClass);
   }
 
+  @Nonnull
   @Override
-  public <T> List<T> getBeans(Class<T> beanClass) {
+  public <T> List<T> getBeans(@Nonnull Class<T> beanClass) {
     final BeanHolder<?> beanHolder = cachedInterfaceMap.get(beanClass);
 
     if (beanHolder == null) {
@@ -131,7 +135,7 @@ public class DefaultInjectionContext implements InjectionContext {
   }
 
 
-  private static void addInterfacesToSink(Set<Class<?>> interfaceSink, Class<?> targetClass) {
+  private static void addInterfacesToSink(@Nonnull Set<Class<?>> interfaceSink, @Nonnull Class<?> targetClass) {
     if (!targetClass.isInterface()) {
       final Class<?> superclass = targetClass.getSuperclass();
       if (superclass != null) {
@@ -145,7 +149,7 @@ public class DefaultInjectionContext implements InjectionContext {
     }
   }
 
-  private void cacheInterfaces(BeanHolder<?> beanHolder) {
+  private void cacheInterfaces(@Nonnull BeanHolder<?> beanHolder) {
     final Set<Class<?>> interfaceSink = new HashSet<Class<?>>();
     addInterfacesToSink(interfaceSink, beanHolder.bean.getClass());
 
@@ -165,7 +169,8 @@ public class DefaultInjectionContext implements InjectionContext {
     }
   }
 
-  private BeanHolder<?> findBeanHolder(Class<?> beanClass) {
+  @Nonnull
+  private BeanHolder<?> findBeanHolder(@Nonnull Class<?> beanClass) {
     // try get bean holder from cache
     BeanHolder<?> beanHolder = cachedInterfaceMap.get(beanClass);
     if (beanHolder != null && beanHolder != NIL_BEAN_HOLDER) {
@@ -194,11 +199,7 @@ public class DefaultInjectionContext implements InjectionContext {
   }
 
 
-  private <T> void addUninitializedBean(T bean) {
-    if (bean == null) {
-      throw new NullPointerException("Bean instance is null");
-    }
-
+  private <T> void addUninitializedBean(@Nonnull T bean) {
     // check, that this bean is unique and there is no already defined bean with exactly the same class,
     // as in this case clashes is inevitable.
     for (final BeanHolder<?> beanHolder : beanHolders) {
@@ -217,7 +218,9 @@ public class DefaultInjectionContext implements InjectionContext {
   }
 
   // creates bean for class-only putBean method
-  private <T> T constructBean(Class<T> beanClass) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+  @Nonnull
+  private <T> T constructBean(@Nonnull Class<T> beanClass) throws IllegalAccessException,
+      InstantiationException, InvocationTargetException {
     if (beanClass.isInterface()) {
       throw new InjectionException("The given class is interface: " + beanClass);
     }
@@ -248,9 +251,10 @@ public class DefaultInjectionContext implements InjectionContext {
     return beanInstance;
   }
 
-  private <T> T getInitializedBean(BeanHolder<?> beanHolder, Class<T> beanClass) {
-    assert beanHolder != null;
 
+  @Nonnull
+  private <T> T getInitializedBean(@Nonnull BeanHolder<?> beanHolder,
+                                   @Nonnull Class<T> beanClass) {
     // initialize all the fields
     if (!beanHolder.initialized) {
       try {
@@ -266,7 +270,8 @@ public class DefaultInjectionContext implements InjectionContext {
   }
 
   // initializes bean within the bean holder
-  private <T> void initializeBeanHolder(BeanHolder<T> beanHolder) throws IllegalAccessException, InvocationTargetException {
+  private <T> void initializeBeanHolder(@Nonnull BeanHolder<T> beanHolder) throws IllegalAccessException,
+      InvocationTargetException {
     // collect all the classes that may contain fields for further initialization.
     final List<Class<?>> classes = new ArrayList<Class<?>>();
     final Class<?> beanImplClass = beanHolder.bean.getClass();
