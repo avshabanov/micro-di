@@ -40,22 +40,8 @@ Just do ``mvn clean install`` in source folder
 
 # Adding to maven project with minimal fuss
 
-In your pom.xml or in your settings.xml add the following repository:
 
-```xml
-<repositories>
-  <repository>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-    <id>custom-central</id>
-    <name>libs-release</name>
-    <url>https://raw.github.com/avshabanov/maven-repo/master/libs-release</url>
-  </repository>
-</repositories>
-```
-
-and then add jar dependency in your pom.xml:
+Add jar dependency in your pom.xml:
 
 ```xml
 <dependency>
