@@ -3,7 +3,7 @@
 
   <parent>
     <artifactId>micro-di-root</artifactId>
-    <groupId>com.truward.di</groupId>
+    <groupId>com.truward</groupId>
     <version>1.0.7-SNAPSHOT</version>
   </parent>
 
