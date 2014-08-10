@@ -2,11 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.truward</groupId>
+  <groupId>com.truward.di</groupId>
   <artifactId>micro-di-root</artifactId>
   <version>1.0.9-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Micro DI Project Root</name>
+  <url>https://github.com/avshabanov/micro-di</url>
+  <description>Micro Dependency Injection Library</description>
 
   <licenses>
     <license>
