@@ -6,3 +6,14 @@
 
 # Maven
 target
+
+# Maven
+target
+
+# Release plugin
+release.properties
+pom.xml.releaseBackup
+
+# Versions plugin
+pom.xml.versionsBackup
+
