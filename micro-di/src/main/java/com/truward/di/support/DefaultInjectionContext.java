@@ -28,6 +28,7 @@ import java.util.*;
 
 /**
  * Default implementation of {@link InjectionContext}.
+ * <p><strong>NOTE:</strong>&nbsp;This class is not thread safe.</p>
  *
  * @author Alexander Shabanov
  */
@@ -71,11 +72,11 @@ public class DefaultInjectionContext implements InjectionContext {
     try {
       addUninitializedBean(constructBean(beanClass));
     } catch (InstantiationException e) {
-      throw new InjectionException(e);
+      throw new InjectionException("Unable to instantiate bean of class=" + beanClass, e);
     } catch (IllegalAccessException e) {
-      throw new InjectionException(e);
+      throw new InjectionException("Unable to invoke constructor of class=" + beanClass, e);
     } catch (InvocationTargetException e) {
-      throw new InjectionException(e);
+      throw new InjectionException("Exception while invoking constructor of class=" + beanClass, e);
     }
   }
 
